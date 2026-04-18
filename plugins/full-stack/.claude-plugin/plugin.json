@@ -1,0 +1,19 @@
+{
+  "name": "full-stack",
+  "version": "0.3.1",
+  "description": "Shared AI skills, agents, commands, and rules for Full-Stack Dart projects",
+  "author": {
+    "name": "Thomas",
+    "url": "https://github.com/thomas-p95"
+  },
+  "homepage": "https://github.com/thomas-p95/fd2-plugin",
+  "repository": "https://github.com/thomas-p95/fd2-plugin",
+  "license": "UNLICENSED",
+  "keywords": [
+    "flutter",
+    "dart",
+    "full-stack",
+    "clean-architecture",
+    "fd2"
+  ]
+}

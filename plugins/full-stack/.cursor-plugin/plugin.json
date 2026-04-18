@@ -1,0 +1,17 @@
+{
+  "name": "full-stack",
+  "displayName": "Full-Stack Dart Development Plugin",
+  "version": "0.3.1",
+  "description": "Shared AI rules, skills, agents, and commands for Full-Stack Dart projects",
+  "author": {
+    "name": "Thomas"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "flutter",
+    "dart",
+    "full-stack",
+    "clean-architecture",
+    "fd2"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "fd2",
+  "owner": {
+    "name": "Thomas"
+  },
+  "metadata": {
+    "description": "AI plugin marketplace \u2014 shared rules, skills, agents, and commands for Full-Stack Dart projects",
+    "version": "0.0.1",
+    "pluginRoot": "plugins"
+  },
+  "plugins": [
+    {
+      "name": "full-stack",
+      "source": "./plugins/full-stack",
+      "description": "Flutter/Dart rules, skills, agents, and commands for full-stack projects"
+    }
+  ]
+}

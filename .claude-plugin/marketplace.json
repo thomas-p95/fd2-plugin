@@ -1,0 +1,36 @@
+{
+  "name": "fd2",
+  "owner": {
+    "name": "Thomas",
+    "url": "https://github.com/thomas-p95"
+  },
+  "metadata": {
+    "description": "AI plugin marketplace \u2014 shared skills, agents, and rules for Full-Stack Dart projects",
+    "version": "0.0.1",
+    "pluginRoot": "plugins"
+  },
+  "plugins": [
+    {
+      "name": "full-stack",
+      "source": "./plugins/full-stack",
+      "description": "Flutter/Dart skills, agents, commands, and rules for full-stack projects",
+      "version": "0.0.1",
+      "author": {
+        "name": "Thomas"
+      },
+      "category": "full-stack",
+      "tags": [
+        "flutter",
+        "dart",
+        "full-stack",
+        "clean-architecture"
+      ],
+      "keywords": [
+        "flutter",
+        "dart",
+        "full-stack",
+        "clean-architecture"
+      ]
+    }
+  ]
+}
