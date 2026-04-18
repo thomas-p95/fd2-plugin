@@ -23,6 +23,8 @@
 
 Internal plugin that registers the marketplace in Claude Code, enabling native plugin loading by stack. No file copying — skills, agents, commands, and hooks load directly from the plugin source.
 
+**Authoring in this repo:** `.claude/commands` and `.claude/skills` are the **canonical** slash commands and skills. **Cursor** uses the same files via symlinks: `.cursor/commands` → `.claude/commands`, `.cursor/skills` → `.claude/skills` — edit once, both tools see updates.
+
 ## Before / After
 
 <table>
@@ -91,8 +93,7 @@ Content lives in `plugins/<stack>/`. Each stack is an independent plugin with it
 | Tool | Settings file | What gets registered |
 |------|--------------|----------------------|
 | **Claude Code** | `.claude/settings.json` | `extraKnownMarketplaces` + `enabledPlugins` |
-
-More coming: Cursor, Windsurf, Copilot, Cline.
+| **Cursor** | `.cursor/` (MCP, rules, etc.) | In **this repo**: `.cursor/commands` → `.claude/commands`, `.cursor/skills` → `.claude/skills` — one copy of each command/skill for both tools. |
 
 ## Install
 
@@ -170,7 +171,7 @@ npx fd2-plugin list -c skills
 RULES
   dart-frog-api-workflow   — Dart Frog API — layers, shared models, routes, DI
   dart-quality-verification — Format, analyze, verify loop, pubspec conventions per package
-  development-workflow     — Development workflow (FVM, git, quality) and subagent delegation
+  development-workflow     — Full-stack workflow — FVM, quality, ticket branch process, subagent delegation
   flutter-app-workflow   — Flutter app — skills, architecture, DI, models (presentation → data)
 
 SKILLS
@@ -270,6 +271,7 @@ Claude Code loads plugins natively:
 
 - `.fd2-plugin.json` tracks configured tools and active stack — commit this file
 - No generated AI config files — Claude Code and Cursor read plugin content directly from the repo source
+- **fd2-plugin repo authoring:** Keep custom slash commands and skills under `.claude/commands` and `.claude/skills`; symlink `.cursor/commands` and `.cursor/skills` to match so Cursor and Claude Code stay aligned
 
 ## License
 

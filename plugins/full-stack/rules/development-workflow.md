@@ -1,52 +1,68 @@
 ---
-description: Development workflow (FVM, git, quality) and when to delegate to subagents
+description: Full-stack Flutter/Dart workflow — discovery tools, FVM, quality, ticket branch process, subagent delegation
 alwaysApply: true
 ---
 
 # Development Workflow
 
+Default context: **full-stack Flutter/Dart** with Clean Architecture-style layering. Layer paths and tools vary by repo; details live in `${CLAUDE_PLUGIN_ROOT}/skills/workflow/SKILL.md`, `${CLAUDE_PLUGIN_ROOT}/rules/flutter-app-workflow.md`, `${CLAUDE_PLUGIN_ROOT}/rules/dart-quality-verification.md`, and the implementor agents below.
+
 ## Codebase understanding (GitNexus)
 
-This repository is **indexed by GitNexus**. For anything that depends on understanding the codebase—where code lives, how flows connect, impact of a change, debugging “where does this come from?”, or safe refactors—**use GitNexus first** (MCP server and CLI), not only text search or guesswork.
+When this project **uses GitNexus** (indexed repo), prefer it for “where does this live?”, flow tracing, impact before refactors, and graph-backed exploration—**not** only text search or guesswork.
 
-- **MCP:** Prefer GitNexus tools (`query`, `context`, `cypher`, `impact`, `route_map`, and related) over generic exploration when they fit the question.
+- **MCP:** Prefer GitNexus tools (`query`, `context`, `cypher`, `impact`, `route_map`, and related) when they fit the question.
 - **CLI:** `npx gitnexus analyze` refreshes the index; `npx gitnexus status` checks freshness.
 - **Skills:** `gitnexus-guide`, `gitnexus-exploring`, `gitnexus-debugging`, `gitnexus-impact-analysis`, `gitnexus-refactoring`, `gitnexus-cli`.
 
----
-
-**When to run this process:** Only when the developer provides a **ticket ID** and **requirements**. Then follow steps 1–5 in order. (If there is no ticket ID or no requirements, do not assume or invent them.)
-
-1. **Update `release-notes.txt`**  
-   Set the content to the issue tracker URL for the ticket (e.g. `https://<your-tracker>/browse/<ticket_ID>`).
-
-2. **Create a new branch**  
-   Follow branch naming and type conventions in `@workflow`. Example: new feature → branch `feat/PROJ-123` from the target branch.
-
-3. **Implement the requirements**  
-   Based on the provided requirements and your analysis, implement the work (delegate to subagents when the task matches the table below).
-
-4. **After finishing code changes: MUST use `/test-writer`**  
-   Invoke the test-writer subagent to add or update the test suite for the changes. Do not consider the task complete until tests have been written or updated for the modified code.
-
-5. **After finishing development (including writing unit tests): MUST use `/code-reviewer`**  
-   Invoke the code-reviewer subagent to run format, analyze, bloc lint, and review all changed code. Do not consider the task complete until the code review is done and any required fixes are applied.
+If GitNexus is not configured for the project, use normal repo search, stack traces, and reading source.
 
 ---
 
-Follow the project's development workflow (see `${CLAUDE_PLUGIN_ROOT}/skills/workflow/SKILL.md`). Summary:
+## Ticket-driven feature work (when user gives ticket ID + requirements)
 
-- **FVM required**: Prefix all Flutter/Dart commands with `fvm` (e.g. `fvm flutter run`, `fvm dart run build_runner build -d`).
-- **Quality**: Format with `fvm dart run melos dart-format` (or `fvm dart format .`), run `fvm dart analyze`, use localization for user-visible strings, follow Clean Architecture.
+**When to run:** User provides a **ticket ID** and **requirements**. Then follow **1 → 5** in order. Do not invent ticket IDs or requirements.
 
-When a task matches one of the following, **delegate to the corresponding subagent**. Use [explicit invocation](https://cursor.com/docs/context/subagents#explicit-invocation): **`/name`** in the prompt (e.g. `/data-implementor add the new endpoint`) or natural mention (e.g. “Use the presentation-implementor subagent to implement this screen”).
+If there is **no** ticket ID or **no** requirements, skip this block and follow normal ad-hoc tasks.
+
+1. **Release notes / tracker link (if the project uses it)**  
+   If the repo uses `release-notes.txt` (or similar) for the active ticket URL, set it to the issue URL for the ticket (pattern: `https://<tracker>/browse/<ticket_ID>` or your tracker’s format).
+
+2. **Branch**  
+   Create a branch per `${CLAUDE_PLUGIN_ROOT}/skills/workflow/SKILL.md` (types, naming, target branch). Example: feature → `feat/PROJ-123`.
+
+3. **Implement**  
+   Implement against the stated requirements; delegate using the subagent table when the task matches.
+
+4. **Tests — MUST use `/test-writer`**  
+   After code changes, invoke the test-writer subagent to add or update tests for what changed. Task not done until tests exist or are updated as appropriate.
+
+5. **Review — MUST use `/code-reviewer`**  
+   After implementation and tests, invoke the code-reviewer subagent for format, analyze, project lint rules (e.g. `bloc_lint` / analyzer if configured), and review. Task not done until review passes and required fixes are applied.
+
+---
+
+## Everyday quality (all work)
+
+Follow `${CLAUDE_PLUGIN_ROOT}/skills/workflow/SKILL.md` for branching, CI, and project conventions. Short summary:
+
+- **FVM:** Prefer `fvm` for Flutter/Dart commands when the repo uses FVM (e.g. `fvm flutter run`, `fvm dart run build_runner build -d`).
+- **Format / analyze:** Use the project’s standard (`fvm dart run melos dart-format`, `fvm dart format .`, or scripts in `melos.yaml` / CI). Run `fvm dart analyze` (or project equivalent); keep analyzer clean per project policy.
+- **UI copy:** Use localization for user-visible strings when the app is set up for it.
+- **Architecture:** Follow Clean Architecture boundaries; see `@clean`, `@presentation`, `@data`, `@domain`, `@di`, `@state`.
+
+---
+
+## Subagent delegation
+
+When a task matches a row, **delegate to that subagent**. Use [explicit invocation](https://cursor.com/docs/context/subagents#explicit-invocation): **`/name`** in the prompt (e.g. `/data-implementor add the endpoint`) or natural mention.
 
 | Task | Invoke with | When to use |
 |------|-------------|-------------|
-| **Data layer (remote + local)** | `/data-implementor` | New or changed endpoints, API contracts, Retrofit APIs, request/response models, local persistence (Hive/SharedPreferences/SecureStorage), or any work in `packages/data`. (`${CLAUDE_PLUGIN_ROOT}/agents/data-implementor.md`) |
-| **Domain layer (repositories + use cases)** | `/domain-implementor` | New or changed repository interfaces/impls in `packages/domain`, use cases in `lib/use_case`, domain exceptions, or business-logic orchestration across data sources. (`${CLAUDE_PLUGIN_ROOT}/agents/domain-implementor.md`) |
-| **Presentation layer** | `/presentation-implementor` | Adding or changing screens, cubits, routes, or views in `lib/screens/`, `lib/widgets/`, or `lib/components/`. (`${CLAUDE_PLUGIN_ROOT}/agents/presentation-implementor.md`) |
-| **Tests** | `/test-writer` | **MANDATORY** after finishing code changes: add or update unit, widget, or integration tests for the changes. (`${CLAUDE_PLUGIN_ROOT}/agents/test-writer.md`) |
-| **Code review** | `/code-reviewer` | **MANDATORY** after finishing development (including unit tests): run format, analyze, bloc lint, and review all changed code. (`${CLAUDE_PLUGIN_ROOT}/agents/code-reviewer.md`) |
+| **Data layer (remote + local)** | `/data-implementor` | Endpoints, API contracts, Retrofit (or equivalent), request/response models, local persistence, or work in the project’s **data** package / layer. (`${CLAUDE_PLUGIN_ROOT}/agents/data-implementor.md`) |
+| **Domain layer (repositories + use cases)** | `/domain-implementor` | Repository interfaces/implementations, use cases, domain exceptions, orchestration across data sources. (`${CLAUDE_PLUGIN_ROOT}/agents/domain-implementor.md`) |
+| **Presentation layer** | `/presentation-implementor` | Screens, cubits, routes, views, widgets in the project’s presentation areas. (`${CLAUDE_PLUGIN_ROOT}/agents/presentation-implementor.md`) |
+| **Tests** | `/test-writer` | **MANDATORY** after code changes: add or update unit, widget, or integration tests. (`${CLAUDE_PLUGIN_ROOT}/agents/test-writer.md`) |
+| **Code review** | `/code-reviewer` | **MANDATORY** after development and tests: format, analyze, lint, review. (`${CLAUDE_PLUGIN_ROOT}/agents/code-reviewer.md`) |
 
-**Do not ask the user which subagent to use.** Analyze the task yourself and either invoke the matching subagent or tell the user to run **`/name`** (e.g. “Run `/presentation-implementor` to implement this screen”). Decide based on the table above; never prompt the user to choose.
+**Do not ask the user which subagent to use.** Pick from the table from the task shape, or tell them to run **`/name`** if they must trigger manually. Never ask the user to choose between subagents.

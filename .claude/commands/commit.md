@@ -6,7 +6,7 @@ Get current git state:
 `!git diff`
 `!git status --short`
 
-Use /caveman:caveman-commit to generate a commit message from the changes above.
+Use `/caveman:caveman-commit` to generate a commit message from the changes above (Cursor: `/caveman-commit`).
 
 Then execute these steps in order:
 

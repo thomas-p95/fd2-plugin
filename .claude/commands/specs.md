@@ -2,7 +2,10 @@
 description: Build plugin artifacts (rules, commands, skills, agents) for Claude Code and Cursor under plugins/**
 ---
 
-/caveman:caveman ultra
+/caveman:caveman ultra (for Claude)
+/caveman ultra (for Cursor)
+
+**This repository:** `.claude/commands` and `.claude/skills` are canonical; `.cursor/commands` and `.cursor/skills` symlink to them — same markdown for both tools.
 
 Build plugin artifacts for Claude Code and Cursor: a reusable AI tool plugin under `plugins/`.
 
@@ -67,4 +70,10 @@ If violations found:
 
 If violations remain → repeat Step 4 until clean.
 
-Once all checks pass: notify user "All clean — running /commit in 30s. Reply to cancel.", wait 30 seconds, then run `/commit`.
+Once all checks pass — **required, do not skip:**
+
+1. Notify user: `All clean — running /commit in 30s. Reply to cancel.`
+2. Wait 30 seconds (unless the user replies to cancel).
+3. **Run `/commit`** (follow `.claude/commands/commit.md`: git state, caveman-commit message, `git add -A`, `bash .claude/commands/scripts/commit.sh <bump> "<msg>"`).
+
+Ending after Step 5 without running `/commit` is **not allowed** unless the user cancelled the 30s wait.
