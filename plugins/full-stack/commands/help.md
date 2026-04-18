@@ -32,6 +32,7 @@ Skills are loaded automatically when relevant. Reference them explicitly with `/
 | `bash`         | Shell scripts, CI/CD bash automation, Fastlane scripts — syntax, error handling, ShellCheck |
 | `clean`        | Clean Architecture layers, dependency rules, repositories, data sources, use cases |
 | `dart`         | Dart naming, syntax, docs, null safety, async patterns, design principles |
+| `dart-frog`    | Dart Frog API routes, middleware, request/response, context DI |
 | `data`         | Retrofit API, remote/local data sources, models, DI in `packages/data` |
 | `di`           | `get_it` + `injectable` DI: `sl` instance, annotations, modules, test overrides |
 | `domain`       | Repository interfaces, use cases, domain exceptions in `packages/domain` |
