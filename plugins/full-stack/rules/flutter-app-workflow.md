@@ -9,7 +9,7 @@ alwaysApply: false
 
 For **format, analyze, pubspec, and verify loop**, follow `${CLAUDE_PLUGIN_ROOT}/rules/dart-quality-verification.md`.
 
-For **ticket-driven workflow, GitNexus usage, FVM, and subagent delegation**, follow `${CLAUDE_PLUGIN_ROOT}/rules/development-workflow.md` (always applied).
+For **feature workflow, GitNexus usage, FVM, and subagent delegation**, follow `${CLAUDE_PLUGIN_ROOT}/rules/development-workflow.md` (always applied).
 
 - **Skills (read relevant sections before coding)**  
   Use plugin skills: `@clean`, `@presentation`, `@state`, `@di`, `@dart`, `@flutter`. Paths resolve via `${CLAUDE_PLUGIN_ROOT}/skills/<name>/SKILL.md`.

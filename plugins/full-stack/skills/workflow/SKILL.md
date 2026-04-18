@@ -144,7 +144,7 @@ fvm dart run build_runner build -d
 ### Branch Naming Convention
 
 - **Target branch**: Use the target branch the user provides; if none, use the project's default integration branch.
-- **Branch name**: `<type>/<ticket_ID>` (e.g. `feat/PROJ-123`).
+- **Branch name**: `<type>/<short-slug>` — kebab-case description of the work (e.g. `feat/auth-biometric-login`, `fix/video-playback-stall`). Do not require or assume a ticket or issue ID; the user may not provide one.
 
 | Type | Use for |
 |------|--------|
@@ -327,7 +327,7 @@ fvm flutter pub upgrade package_name
 
 ## Troubleshooting
 
-See [reference/troubleshooting.md](reference/troubleshooting.md) for FVM issues, build runner problems, and dependency conflicts.
+See `reference/troubleshooting.md` for FVM issues, build runner problems, and dependency conflicts.
 
 ## References
 

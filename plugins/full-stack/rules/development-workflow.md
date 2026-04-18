@@ -1,5 +1,5 @@
 ---
-description: Full-stack Flutter/Dart workflow — discovery tools, FVM, quality, ticket branch process, subagent delegation
+description: Full-stack Flutter/Dart workflow — discovery tools, FVM, quality, branching, subagent delegation
 alwaysApply: true
 ---
 
@@ -19,25 +19,20 @@ If GitNexus is not configured for the project, use normal repo search, stack tra
 
 ---
 
-## Ticket-driven feature work (when user gives ticket ID + requirements)
+## Feature work (requirements-driven)
 
-**When to run:** User provides a **ticket ID** and **requirements**. Then follow **1 → 5** in order. Do not invent ticket IDs or requirements.
+**When to run:** User gives **requirements** (or a clear task). Follow **1 → 4** in order. Do not invent requirements.
 
-If there is **no** ticket ID or **no** requirements, skip this block and follow normal ad-hoc tasks.
+1. **Branch**  
+   Create a branch per `${CLAUDE_PLUGIN_ROOT}/skills/workflow/SKILL.md` (types, naming, target branch). Example: feature → `feat/short-slug-from-task`.
 
-1. **Release notes / tracker link (if the project uses it)**  
-   If the repo uses `release-notes.txt` (or similar) for the active ticket URL, set it to the issue URL for the ticket (pattern: `https://<tracker>/browse/<ticket_ID>` or your tracker’s format).
-
-2. **Branch**  
-   Create a branch per `${CLAUDE_PLUGIN_ROOT}/skills/workflow/SKILL.md` (types, naming, target branch). Example: feature → `feat/PROJ-123`.
-
-3. **Implement**  
+2. **Implement**  
    Implement against the stated requirements; delegate using the subagent table when the task matches.
 
-4. **Tests — MUST use `/test-writer`**  
+3. **Tests — MUST use `/test-writer`**  
    After code changes, invoke the test-writer subagent to add or update tests for what changed. Task not done until tests exist or are updated as appropriate.
 
-5. **Review — MUST use `/code-reviewer`**  
+4. **Review — MUST use `/code-reviewer`**  
    After implementation and tests, invoke the code-reviewer subagent for format, analyze, project lint rules (e.g. `bloc_lint` / analyzer if configured), and review. Task not done until review passes and required fixes are applied.
 
 ---

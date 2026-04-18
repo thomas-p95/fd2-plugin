@@ -18,7 +18,7 @@ Quick reference for all commands and skills available in this full-stack plugin.
 | Command   | Description |
 | --------- | ----------- |
 | `/commit` | Format, stage, commit with conventional message, and push to origin |
-| `/specs`  | Accept ticket ID + requirements, execute full 5-step development workflow |
+| `/specs`  | Accept requirements, execute full feature workflow (branch → implement → test → review) |
 | `/help`   | Show this reference |
 
 ---

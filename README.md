@@ -171,7 +171,7 @@ npx fd2-plugin list -c skills
 RULES
   dart-frog-api-workflow   — Dart Frog API — layers, shared models, routes, DI
   dart-quality-verification — Format, analyze, verify loop, pubspec conventions per package
-  development-workflow     — Full-stack workflow — FVM, quality, ticket branch process, subagent delegation
+  development-workflow     — Full-stack workflow — FVM, quality, branching, subagent delegation
   flutter-app-workflow   — Flutter app — skills, architecture, DI, models (presentation → data)
 
 SKILLS
@@ -200,7 +200,7 @@ AGENTS
 
 COMMANDS
   help                     — List all available commands and skills in this plugin
-  specs                    — Accept ticket ID + requirements, run full 5-step dev workflow
+  specs                    — Accept requirements, run full feature workflow (branch → implement → test → review)
 ```
 
 ## Shared Content

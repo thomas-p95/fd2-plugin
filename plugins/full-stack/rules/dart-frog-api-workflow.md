@@ -10,7 +10,7 @@ alwaysApply: false
 
 For **format, analyze, pubspec, and verify loop**, follow `${CLAUDE_PLUGIN_ROOT}/rules/dart-quality-verification.md`.
 
-For **ticket-driven workflow, GitNexus, FVM**, follow `${CLAUDE_PLUGIN_ROOT}/rules/development-workflow.md`.
+For **feature workflow, GitNexus, FVM**, follow `${CLAUDE_PLUGIN_ROOT}/rules/development-workflow.md`.
 
 - **Skills**  
   `@dart-frog`, `@data`, `@di`, `@clean`, `@dart`. See `${CLAUDE_PLUGIN_ROOT}/skills/<name>/SKILL.md`.
