@@ -1,11 +1,12 @@
 {
   "name": "fd2",
   "owner": {
-    "name": "Thomas"
+    "name": "Thomas",
+    "email": "phamthanhtung1995@gmail.com"
   },
   "metadata": {
     "description": "AI plugin marketplace \u2014 shared rules, skills, agents, and commands for Full-Stack Dart projects",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "pluginRoot": "plugins"
   },
   "plugins": [
