@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "AI plugin marketplace \u2014 shared skills, agents, and rules for Full-Stack Dart projects",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "pluginRoot": "plugins"
   },
   "plugins": [

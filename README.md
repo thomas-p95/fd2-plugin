@@ -49,7 +49,8 @@ Rules drift. New projects start from scratch. Onboarding is "copy from that othe
 ### ✅ With plugin
 
 ```bash
-npx fd2-plugin init
+/plugin marketplace add thomas-p95/fd2-plugin
+/plugin install full-stack@fd2
 ```
 
 ```jsonc
@@ -106,64 +107,23 @@ Content lives in `plugins/<stack>/`. Each stack is an independent plugin with it
 
 Skills, agents, commands, and hooks load natively. Claude Code reads `plugins/full-stack/` directly from the repo.
 
-### Via CLI — register marketplace in project settings
-
-```bash
-# Run directly from GitHub, no install needed
-npx github:thomas-p95/fd2-plugin init
-
-# Or install as devDependency
-npm install --save-dev github:thomas-p95/fd2-plugin
-npx fd2-plugin init
-
-# Or install globally
-npm install -g github:thomas-p95/fd2-plugin
-fd2-plugin init
-```
-
 ## Usage
 
-### `init` — Register marketplace in project
+### Plugin-first workflow
 
 ```bash
-# Both Claude + Cursor (default targets)
-npx fd2-plugin init
-
-# Preview only
-npx fd2-plugin init --dry-run
-
-# Single tool
-npx fd2-plugin init -t claude
+/plugin marketplace add thomas-p95/fd2-plugin
+/plugin install full-stack@fd2
 ```
 
-Output:
+You only need to register the marketplace once per environment, then install the stack plugin.
 
 ```
-Initializing AI plugin (stack: full-stack)...
-  registered marketplace: fd2 (thomas-p95/fd2-plugin)
-  enabled plugin: full-stack@fd2
-✓ claude configured
-
-Done! AI configs installed.
+extraKnownMarketplaces.fd2 -> thomas-p95/fd2-plugin
+enabledPlugins.full-stack@fd2 -> true
 ```
 
-Writes `.fd2-plugin.json` (tracks stack + configured tools) and updates `.claude/settings.json`.
-
-### `sync` — Re-register (idempotent)
-
-```bash
-npx fd2-plugin sync                        # stack from .fd2-plugin.json (default full-stack)
-npx fd2-plugin sync --dry-run              # preview only
-```
-
-Since plugins load live from source, sync is mainly useful after adding tools or changing `.fd2-plugin.json`.
-
-### `list` — Browse available content
-
-```bash
-npx fd2-plugin list
-npx fd2-plugin list -c skills
-```
+### Browse available content
 
 ```
 [full-stack]
@@ -238,7 +198,8 @@ Content here. Markdown supported.
 ### How It Works
 
 ```
-npx fd2-plugin init
+/plugin marketplace add thomas-p95/fd2-plugin
+/plugin install full-stack@fd2
         │
         └── .claude/settings.json ← extraKnownMarketplaces + enabledPlugins
 
@@ -246,18 +207,12 @@ Claude Code loads plugins natively:
   plugins/full-stack/{skills,agents,commands,hooks}/  ← loaded directly from repo
 ```
 
-| Command | What it does |
-|---------|-------------|
-| `init` | Write `.fd2-plugin.json` + register marketplace in tool settings |
-| `sync` | Re-register (idempotent — safe to run anytime) |
-| `list` | Display available rules/skills/agents/commands |
-
 ## Adding New Content
 
 1. Create `.md` in the right dir under `plugins/<stack>/` (`rules/`, `skills/`, `agents/`, `commands/`)
 2. Add frontmatter: `title` + `description` (minimum)
 3. Write content
-4. `npx fd2-plugin list` → verify it shows
+4. Verify the plugin appears in Claude Code plugin list
 5. Commit + push → all projects pick it up immediately (no re-sync needed)
 
 ## Adding a New Stack
@@ -269,7 +224,6 @@ Claude Code loads plugins natively:
 
 ## Notes
 
-- `.fd2-plugin.json` tracks configured tools and active stack — commit this file
 - No generated AI config files — Claude Code and Cursor read plugin content directly from the repo source
 - **fd2-plugin repo authoring:** Keep custom slash commands and skills under `.claude/commands` and `.claude/skills`; symlink `.cursor/commands` and `.cursor/skills` to match so Cursor and Claude Code stay aligned
 
